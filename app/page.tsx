@@ -1,6 +1,6 @@
 "use client"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -24,6 +24,8 @@ export default function Component() {
   const statsRef = useRef<HTMLDivElement>(null)
   const cultureRef = useRef<HTMLDivElement>(null)
   const heroesRef = useRef<HTMLDivElement>(null)
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -53,7 +55,7 @@ export default function Component() {
       className="flex flex-col min-h-dvh bg-white overflow-x-hidden"
     >
       <motion.header
-        className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 h-16 flex items-center border-b-2 border-red-600 bg-white/90 backdrop-blur-md"
+        className="fixed top-0 left-0 right-0 z-50 px-4 lg:px-6 h-16 flex items-center justify-between border-b-2 border-red-600 bg-white/90 backdrop-blur-md"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -69,7 +71,9 @@ export default function Component() {
             Indonesia Merdeka
           </span>
         </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex gap-4 lg:gap-6">
           <Link
             href="#sejarah"
             className="text-sm font-medium hover:text-red-600 transition-colors"
@@ -88,13 +92,95 @@ export default function Component() {
           >
             Pahlawan
           </Link>
-          <Link
-            href="#kontak"
-            className="text-sm font-medium hover:text-red-600 transition-colors"
-          >
-            Kontak
-          </Link>
         </nav>
+
+        {/* Mobile Menu Button */}
+        <motion.button
+          className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1"
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          <motion.span
+            className="w-6 h-0.5 bg-red-600 rounded-full"
+            animate={
+              mobileMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }
+            }
+            transition={{ duration: 0.3 }}
+          />
+          <motion.span
+            className="w-6 h-0.5 bg-red-600 rounded-full"
+            animate={mobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+          <motion.span
+            className="w-6 h-0.5 bg-red-600 rounded-full"
+            animate={
+              mobileMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
+            }
+            transition={{ duration: 0.3 }}
+          />
+        </motion.button>
+
+        {/* Mobile Menu Overlay */}
+        <motion.div
+          className="md:hidden fixed inset-0 top-16 bg-white/95 backdrop-blur-md z-[9999]"
+          initial={{ opacity: 1, y: -20 }}
+          animate={
+            mobileMenuOpen ? { opacity: 1, y: 200 } : { opacity: 1, y: -20 }
+          }
+          transition={{ duration: 0.3 }}
+          style={{
+            pointerEvents: mobileMenuOpen ? "auto" : "none",
+          }}
+        >
+          <nav className="flex flex-col items-center justify-center h-full space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                mobileMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+              }
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              <Link
+                href="#sejarah"
+                className="text-2xl font-semibold text-red-700 hover:text-red-600 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Sejarah
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                mobileMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+              }
+              transition={{ duration: 0.3, delay: 0.2 }}
+            >
+              <Link
+                href="#kebudayaan"
+                className="text-2xl font-semibold text-red-700 hover:text-red-600 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Kebudayaan
+              </Link>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={
+                mobileMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+              }
+              transition={{ duration: 0.3, delay: 0.3 }}
+            >
+              <Link
+                href="#pahlawan"
+                className="text-2xl font-semibold text-red-700 hover:text-red-600 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Pahlawan
+              </Link>
+            </motion.div>
+          </nav>
+        </motion.div>
       </motion.header>
 
       <main className="flex-1 pt-16">
@@ -220,7 +306,7 @@ export default function Component() {
                   </motion.div>
 
                   <motion.h1
-                    className="text-5xl font-bold tracking-tighter sm:text-7xl xl:text-8xl/none"
+                    className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl/none"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.4 }}
@@ -280,7 +366,7 @@ export default function Component() {
                   </motion.h1>
 
                   <motion.h2
-                    className="text-3xl font-semibold sm:text-5xl"
+                    className="text-2xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, delay: 0.6 }}
@@ -314,12 +400,11 @@ export default function Component() {
                 </div>
 
                 <motion.div
-                  className="flex flex-col gap-4 min-[400px]:flex-row"
+                  className="flex flex-col gap-4 sm:flex-row"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 1 }}
                 >
-                  {/* Tombol Pelajari Sejarah */}
                   <motion.div
                     whileHover={{
                       scale: 1.05,
@@ -327,23 +412,16 @@ export default function Component() {
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <a
-                      href="https://www.google.com/search?q=sejarah+kemerdekaan+indonesia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button className="bg-gradient-to-r from-white to-yellow-100 text-red-600 hover:from-yellow-100 hover:to-white font-bold px-10 py-4 text-lg shadow-2xl border-2 border-white/20">
-                        <motion.span
-                          animate={{ x: [0, 3, 0] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                        >
-                          Pelajari Sejarah
-                        </motion.span>
-                      </Button>
-                    </a>
+                    <Button className="bg-gradient-to-r from-white to-yellow-100 text-red-600 hover:from-yellow-100 hover:to-white font-bold px-10 py-4 text-lg shadow-2xl border-2 border-white/20">
+                      <motion.span
+                        animate={{ x: [0, 3, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        Pelajari Sejarah
+                      </motion.span>
+                    </Button>
                   </motion.div>
 
-                  {/* Tombol Lihat Galeri */}
                   <motion.div
                     whileHover={{
                       scale: 1.05,
@@ -351,19 +429,13 @@ export default function Component() {
                     }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    <a
-                      href="https://www.google.com/search?q=galeri+foto+kemerdekaan+indonesia&tbm=isch"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Button
+                      variant="outline"
+                      className="border-3 border-white text-white hover:bg-white/20 px-10 py-4 text-lg backdrop-blur-sm font-semibold"
                     >
-                      <Button
-                        variant="outline"
-                        className="border-3 border-white text-white hover:bg-white/20 px-10 py-4 text-lg backdrop-blur-sm font-semibold"
-                      >
-                        <Sparkles className="w-5 h-5 mr-2" />
-                        Lihat Galeri
-                      </Button>
-                    </a>
+                      <Sparkles className="w-5 h-5 mr-2" />
+                      Lihat Galeri
+                    </Button>
                   </motion.div>
                 </motion.div>
               </motion.div>
@@ -947,12 +1019,6 @@ export default function Component() {
             className="text-sm hover:text-red-600 transition-colors font-medium"
           >
             Privasi
-          </Link>
-          <Link
-            href="#"
-            className="text-sm hover:text-red-600 transition-colors font-medium"
-          >
-            Kontak
           </Link>
         </nav>
       </footer>
