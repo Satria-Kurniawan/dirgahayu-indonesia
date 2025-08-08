@@ -177,7 +177,7 @@ export default function Component() {
             ))}
           </div>
 
-          <div className="container relative z-10 px-4 md:px-6 h-full">
+          <div className="container mx-auto relative z-10 px-4 md:px-6 h-full">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px] h-full items-center">
               <motion.div
                 className="flex flex-col justify-center space-y-6 text-white"
@@ -503,7 +503,7 @@ export default function Component() {
             <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-transparent" />
           </div>
 
-          <div className="container px-4 md:px-6 relative z-10">
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={statsInView ? { opacity: 1, y: 0 } : {}}
@@ -641,7 +641,7 @@ export default function Component() {
             <div className="absolute inset-0 opacity-10 bg-gradient-to-br from-red-600/20 to-transparent" />
           </motion.div>
 
-          <div className="container px-4 md:px-6 relative z-10">
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={cultureInView ? { opacity: 1, y: 0 } : {}}
@@ -758,7 +758,7 @@ export default function Component() {
           id="pahlawan"
           className="w-full py-24 md:py-32 lg:py-40 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden"
         >
-          <div className="container px-4 md:px-6 relative z-10">
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={heroesInView ? { opacity: 1, y: 0 } : {}}
@@ -869,7 +869,7 @@ export default function Component() {
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5" />
           </motion.div>
 
-          <div className="container px-4 md:px-6 relative z-10">
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               whileInView={{ opacity: 1, y: 0 }}
